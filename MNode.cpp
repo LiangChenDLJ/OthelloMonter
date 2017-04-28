@@ -6,6 +6,7 @@ MNode::MNode(Othello *othello){
 	parent = 0;
 	vn = an = 0;
 	//fullexpanded = 0;
+    blackCount = whiteCount = 0;
 }
 
 int MNode::TreePolicy() {
