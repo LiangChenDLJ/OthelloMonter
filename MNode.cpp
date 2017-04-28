@@ -61,7 +61,8 @@ int MNode::SearchOnce() {
 }
 
 MNode* MNode::SearchAndPlay() {
-	const double timelimit = 10;
+	const double timelimit = getTimelimit();
+	std::cout << "searchtime: " << timelimit << std::endl;
 	time_t s_time, t_time;
 	time(&s_time);
 	int i = 0;
