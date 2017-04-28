@@ -21,10 +21,10 @@ int main() {
 			mtree = mtree->SearchAndPlay();
 		}
 		else {
-			
+			/*
 			srand(time(0));
 			mtree = mtree->Play(rand() % mtree->othello->playset.size());
-			/*
+			*/
 			std::cin >> a;
 			if (a == -1) {
 				srand(time(0));
@@ -34,7 +34,6 @@ int main() {
 				std::cin >> b;
 				mtree = mtree->Play(a, b);
 			}
-			*/
 		}
 		mtree->othello->showboard();
 	}
