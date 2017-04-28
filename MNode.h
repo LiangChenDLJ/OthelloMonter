@@ -9,6 +9,8 @@ class MNode {
 public:
 	MNode(Othello *othello);
 	Othello *othello;
+    int blackCount;
+    int whiteCount;
 	int vn;
 	double an;
 	vector<MNode*> children;
