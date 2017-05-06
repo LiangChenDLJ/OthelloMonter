@@ -5,16 +5,25 @@
 
 #include"Othello.h"
 
+// a Monte Carlo Search Tree Node
 class MNode {
 public:
 	MNode(Othello *othello);
+	
+	// game state
 	Othello *othello;
+	
+	// number of chesses on the board
     int blackCount;
     int whiteCount;
+    
+	// Monte Carlo Value for the calcutation of UCT
 	int vn;
 	double an;
+	
 	vector<MNode*> children;
 	MNode *parent;
+	
 	MNode* SearchAndPlay();
 	MNode* Play(int n);
 	MNode* Play(int x, int y);
@@ -23,11 +32,12 @@ public:
 	//int fullexpanded;
 	~MNode();
 
-	//FOT TEST
+	//FOT TEST, print out the tree, can be just a number of levels
 	void showtree(int level, int tatrgetlevel);
 	void showtree(int level);
 
 private:
+	// get the search time bound
 	inline double getTimelimit(){
 		double base = 20;
 		double childrenfactor;

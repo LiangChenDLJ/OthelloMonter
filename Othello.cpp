@@ -12,6 +12,7 @@ const int Othello::PLAYING = 0;
 const int Othello::DIRSET[8][2] = { { -1,-1 },{ -1,0 },{ -1,1 },{ 0,-1 },{ 0,1 },{ 1,-1 },{ 1,0 },{ 1,1 } };
 
 Othello::Othello() {
+	// initialize the board
 	boardstate = PLAYING;
 	turn = BLACK;
 	board(3, 3) = board(4, 4) = WHITE;
@@ -21,21 +22,27 @@ Othello::Othello() {
 
 int Othello::randomplay() {
 	if (boardstate != PLAYING) return boardstate;
-	//srand((int)time(0));
 	return play(playset[rand() % playset.size()]);
 }
 
 int Othello::play(PlayRev playrev) {
+	// uppdate the positon
 	int pos = playrev.pos;
 	board(pos) = turn;
+	
+	// reverse chesses accordingly
 	for (int j = 0; j < 8; j++) {
 		int posoff = to1d(DIRSET[j][0], DIRSET[j][1]);
 		for (int k = 0; k < playrev.revset[j]; k++) {
 			board(pos + posoff * (k + 1)) *= -1;
 		}
 	}
+	
+	//reverse the turn
 	turn = -turn;
+	
 	updateplayset();
+	// check which turn it is and if the game is over	
 	if (playset.size() == 0) {
 		turn = -turn;
 		updateplayset();
@@ -95,10 +102,12 @@ void Othello::updateplayset() {
 	int revset[8];
 	PlayRev* playrev;
 	playset.clear();
+	// for each position check once
 	for (pos = 0; pos < 64; pos++) {
 		if (board(pos)) continue;
 		isvalid = 0;
 		memset(revset, 0, sizeof(revset));
+		// check all 8 direction if chesses can be reversed
 		for (j = 0; j < 8; j++) {
 			dirx = DIRSET[j][0]; diry = DIRSET[j][1];
 			tposx = to2dx(pos); tposy = to2dy(pos);
@@ -120,6 +129,7 @@ void Othello::updateplayset() {
 				}
 			}
 		}
+		// add a new playrev to the revset
 		if (isvalid) {
 			playset.push_back(PlayRev());
 			playrev = &playset[playset.size()-1];
@@ -127,7 +137,6 @@ void Othello::updateplayset() {
 			for (j = 0; j < 8; j++) {
 				playrev->revset[j] = revset[j];
 			}
-			
 		}
 	}
 }
